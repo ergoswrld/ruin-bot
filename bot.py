@@ -1742,11 +1742,13 @@ def run():
 
 def keep_alive():
     t = Thread(target=run)
+    t.daemon = True
     t.start()
 
-keep_alive()
+if __name__ == "__main__":
+    keep_alive()
 
-print("TOKEN loaded:", bool(TOKEN), flush=True)
-print("Starting bot login...", flush=True)
+    print("TOKEN loaded:", bool(TOKEN), flush=True)
+    print("Starting bot login...", flush=True)
 
-bot.run(TOKEN)
+    bot.run(TOKEN)
