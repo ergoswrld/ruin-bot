@@ -820,7 +820,7 @@ class IndexView(discord.ui.View):
 
 @bot.event
 async def on_ready():
-    print(f"Logged in as {bot.user}")
+    print(f"Logged in as {bot.user}", flush=True)
 
 @bot.event
 async def on_message_delete(message):
@@ -1746,5 +1746,7 @@ def keep_alive():
 
 keep_alive()
 
+print("TOKEN loaded:", bool(TOKEN), flush=True)
+print("Starting bot login...", flush=True)
 
 bot.run(TOKEN)
