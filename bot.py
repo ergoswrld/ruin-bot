@@ -846,10 +846,28 @@ async def on_command_error(ctx, error):
             COLOUR_ERROR,
         )
         await ctx.send(embed=embed)
+
+    elif isinstance(error, commands.MissingRequiredArgument):
+        embed = make_embed(
+            "❌ Missing Argument",
+            "Usage: `,steale <custom emoji>`",
+            COLOUR_ERROR
+        )
+        await ctx.send(embed=embed)
+
+    elif isinstance(error, commands.BadArgument):
+        embed = make_embed(
+            "❌ Invalid Input",
+            "That emoji couldn't be read.",
+            COLOUR_ERROR
+        )
+        await ctx.send(embed=embed)
+
     elif isinstance(error, commands.CommandNotFound):
         return
+
     else:
-        raise error
+        print(error)  
 
 # -------------------------
 # COMMANDS: CORE
