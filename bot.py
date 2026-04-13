@@ -840,6 +840,8 @@ async def on_message_delete(message):
 
 @bot.event
 async def on_command_error(ctx, error):
+    print("COMMAND ERROR:", repr(error))
+
     if isinstance(error, commands.CommandOnCooldown):
         embed = make_embed(
             "⏳ Slow down",
@@ -851,7 +853,7 @@ async def on_command_error(ctx, error):
     elif isinstance(error, commands.MissingRequiredArgument):
         embed = make_embed(
             "❌ Missing Argument",
-            "Usage: `,steale <custom emoji>`",
+            "Usage: `,em <custom emoji>`",
             COLOUR_ERROR
         )
         await ctx.send(embed=embed)
@@ -868,7 +870,124 @@ async def on_command_error(ctx, error):
         return
 
     else:
-        print(error)  
+        print("UNHANDLED ERROR:", repr(error))
+        await ctx.send(f"❌ Error: `{error}`")
+
+
+@bot.command(name="em")
+async def steale(ctx, *, emoji_input: str = None):
+    print("EM COMMAND TRIGGERED")
+    print("RAW INPUT:", repr(emoji_input))
+
+    if not ctx.guild:
+        embed = make_embed(
+            "❌ Emoji Import",
+            "This command only works inside a server.",
+            COLOUR_ERROR
+        )
+        await ctx.send(embed=embed)
+        return
+
+    if not emoji_input:
+        embed = make_embed(
+            "❌ Missing Argument",
+            "Usage: `,em <custom emoji>`",
+            COLOUR_ERROR
+        )
+        await ctx.send(embed=embed)
+        return
+
+    match = re.search(r"<a?:\w+:\d+>", emoji_input)
+
+    if not match:
+        embed = make_embed(
+            "❌ Invalid Emoji",
+            "I couldn't find a custom emoji in your message.\nExample: `,em <:name:123456789012345678>`",
+            COLOUR_ERROR
+        )
+        await ctx.send(embed=embed)
+        return
+
+    emoji = discord.PartialEmoji.from_str(match.group(0))
+    print("PARSED EMOJI:", emoji)
+    print("EMOJI ID:", emoji.id)
+    print("EMOJI NAME:", emoji.name)
+    print("EMOJI ANIMATED:", emoji.animated)
+
+    if emoji.id is None:
+        embed = make_embed(
+            "❌ Invalid Emoji",
+            "That is not a valid custom Discord emoji.",
+            COLOUR_ERROR
+        )
+        await ctx.send(embed=embed)
+        return
+
+    me = ctx.guild.me
+    if me is None:
+        embed = make_embed(
+            "❌ Permission Check Failed",
+            "I couldn't check my permissions in this server.",
+            COLOUR_ERROR
+        )
+        await ctx.send(embed=embed)
+        return
+
+    if not me.guild_permissions.create_guild_expressions:
+        embed = make_embed(
+            "❌ Missing Permission",
+            "I need the **Create Guild Expressions** permission to upload emojis here.",
+            COLOUR_ERROR
+        )
+        await ctx.send(embed=embed)
+        return
+
+    try:
+        image_bytes = await emoji.read()
+        print("IMAGE BYTES LENGTH:", len(image_bytes))
+
+        new_emoji = await ctx.guild.create_custom_emoji(
+            name=emoji.name or "stolen_emoji",
+            image=image_bytes,
+            reason=f"Emoji uploaded by request of {ctx.author}"
+        )
+
+        embed = make_embed(
+            "✅ Emoji Added",
+            f"Successfully added {new_emoji} to **{ctx.guild.name}**.",
+            COLOUR_UTILITY
+        )
+        embed.add_field(name="Name", value=f"`{new_emoji.name}`", inline=True)
+        embed.add_field(name="Animated", value="Yes" if emoji.animated else "No", inline=True)
+        set_user_thumb(embed, ctx.author)
+        await ctx.send(embed=embed)
+
+    except discord.Forbidden:
+        embed = make_embed(
+            "❌ Upload Blocked",
+            "Discord says I don't have permission to upload emojis here.",
+            COLOUR_ERROR
+        )
+        await ctx.send(embed=embed)
+        print("FORBIDDEN: missing upload permission")
+
+    except discord.HTTPException as e:
+        embed = make_embed(
+            "❌ Discord Rejected Upload",
+            f"Discord rejected that emoji.\n```{e}```",
+            COLOUR_ERROR
+        )
+        await ctx.send(embed=embed)
+        print("HTTP EXCEPTION:", repr(e))
+
+    except Exception as e:
+        embed = make_embed(
+            "❌ Unexpected Error",
+            f"Something went wrong.\n```{e}```",
+            COLOUR_ERROR
+        )
+        await ctx.send(embed=embed)
+        print("UNEXPECTED STEAL ERROR:", repr(e))
 
 # -------------------------
 # COMMANDS: CORE
