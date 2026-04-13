@@ -907,10 +907,6 @@ async def steale(ctx, *, emoji_input: str = None):
         return
 
     emoji = discord.PartialEmoji.from_str(match.group(0))
-    print("PARSED EMOJI:", emoji)
-    print("EMOJI ID:", emoji.id)
-    print("EMOJI NAME:", emoji.name)
-    print("EMOJI ANIMATED:", emoji.animated)
 
     if emoji.id is None:
         embed = make_embed(
@@ -931,10 +927,10 @@ async def steale(ctx, *, emoji_input: str = None):
         await ctx.send(embed=embed)
         return
 
-    if not me.guild_permissions.create_guild_expressions:
+    if not me.guild_permissions.create_expressions:
         embed = make_embed(
             "❌ Missing Permission",
-            "I need the **Create Guild Expressions** permission to upload emojis here.",
+            "I need the **Create Expressions** permission to upload emojis here.",
             COLOUR_ERROR
         )
         await ctx.send(embed=embed)
@@ -942,7 +938,6 @@ async def steale(ctx, *, emoji_input: str = None):
 
     try:
         image_bytes = await emoji.read()
-        print("IMAGE BYTES LENGTH:", len(image_bytes))
 
         new_emoji = await ctx.guild.create_custom_emoji(
             name=emoji.name or "stolen_emoji",
@@ -967,7 +962,6 @@ async def steale(ctx, *, emoji_input: str = None):
             COLOUR_ERROR
         )
         await ctx.send(embed=embed)
-        print("FORBIDDEN: missing upload permission")
 
     except discord.HTTPException as e:
         embed = make_embed(
@@ -976,7 +970,6 @@ async def steale(ctx, *, emoji_input: str = None):
             COLOUR_ERROR
         )
         await ctx.send(embed=embed)
-        print("HTTP EXCEPTION:", repr(e))
 
     except Exception as e:
         embed = make_embed(
@@ -985,7 +978,6 @@ async def steale(ctx, *, emoji_input: str = None):
             COLOUR_ERROR
         )
         await ctx.send(embed=embed)
-        print("UNEXPECTED STEAL ERROR:", repr(e))
 
 # -------------------------
 # COMMANDS: CORE
