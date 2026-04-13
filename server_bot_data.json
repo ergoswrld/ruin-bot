@@ -1,0 +1,161 @@
+{
+    "595436749338181636": {
+        "coins": 116,
+        "total_hits": 2,
+        "rare_hits": 0,
+        "last_flavour": "Watermelon Chill",
+        "flavour_counts": {
+            "Blue Raspberry Ice": 1,
+            "Watermelon Chill": 1
+        },
+        "flavour_inventory": {
+            "Blue Raspberry Ice": 1,
+            "Watermelon Chill": 1
+        },
+        "streak": 1,
+        "best_streak": 1,
+        "last_vape_date": "2026-04-13T06:32:49.702089+00:00",
+        "last_daily_claim": "2026-04-13",
+        "daily_streak": 1,
+        "hunt_count": 2,
+        "pets": [
+            {
+                "id": 1,
+                "species": "Lemon Lynx",
+                "emoji": "\ud83d\udc31",
+                "nickname": "Lemon Lynx",
+                "favourite_flavour": "Icy Melon",
+                "trait": "Sneaky",
+                "hunger": 60,
+                "happiness": 50,
+                "level": 1,
+                "xp": 0,
+                "equipped": false,
+                "wins": 0,
+                "losses": 0
+            },
+            {
+                "id": 2,
+                "species": "Nicotine Fox",
+                "emoji": "\ud83e\udd8a",
+                "nickname": "Nicotine Fox",
+                "favourite_flavour": "Cola Burst",
+                "trait": "Hunter",
+                "hunger": 60,
+                "happiness": 50,
+                "level": 1,
+                "xp": 0,
+                "equipped": false,
+                "wins": 0,
+                "losses": 0
+            }
+        ],
+        "next_pet_id": 3,
+        "inventory": {},
+        "quotes_saved": 0,
+        "quests": {
+            "date": "2026-04-13",
+            "active": [
+                {
+                    "id": "daily1",
+                    "name": "Clock In",
+                    "type": "daily",
+                    "goal": 1,
+                    "reward": 90,
+                    "progress": 1,
+                    "claimed": false
+                },
+                {
+                    "id": "crime2",
+                    "name": "Petty Criminal",
+                    "type": "crime",
+                    "goal": 2,
+                    "reward": 130,
+                    "progress": 0,
+                    "claimed": false
+                },
+                {
+                    "id": "vape5",
+                    "name": "Cloud Warmup",
+                    "type": "vape",
+                    "goal": 5,
+                    "reward": 100,
+                    "progress": 2,
+                    "claimed": false
+                }
+            ]
+        }
+    },
+    "1312357840639496266": {
+        "coins": 9,
+        "total_hits": 2,
+        "rare_hits": 1,
+        "last_flavour": "Peach Lemonade",
+        "flavour_counts": {
+            "Celestial Bubblegum": 1,
+            "Peach Lemonade": 1
+        },
+        "flavour_inventory": {
+            "Celestial Bubblegum": 1,
+            "Peach Lemonade": 1
+        },
+        "streak": 1,
+        "best_streak": 1,
+        "last_vape_date": "2026-04-13T20:23:46.131560+00:00",
+        "last_daily_claim": null,
+        "daily_streak": 0,
+        "hunt_count": 1,
+        "pets": [
+            {
+                "id": 1,
+                "species": "Vapor Hawk",
+                "emoji": "\ud83e\udd85",
+                "nickname": "Vapor Hawk",
+                "favourite_flavour": "Nebula Mint",
+                "trait": "Guardian",
+                "hunger": 60,
+                "happiness": 50,
+                "level": 1,
+                "xp": 0,
+                "equipped": false,
+                "wins": 0,
+                "losses": 0
+            }
+        ],
+        "next_pet_id": 2,
+        "inventory": {},
+        "quotes_saved": 0,
+        "quests": {
+            "date": "2026-04-13",
+            "active": [
+                {
+                    "id": "hunt3",
+                    "name": "Animal Tracker",
+                    "type": "hunt",
+                    "goal": 3,
+                    "reward": 120,
+                    "progress": 1,
+                    "claimed": false
+                },
+                {
+                    "id": "crime2",
+                    "name": "Petty Criminal",
+                    "type": "crime",
+                    "goal": 2,
+                    "reward": 130,
+                    "progress": 0,
+                    "claimed": false
+                },
+                {
+                    "id": "rob1",
+                    "name": "Sticky Fingers",
+                    "type": "rob_success",
+                    "goal": 1,
+                    "reward": 180,
+                    "progress": 0,
+                    "claimed": false
+                }
+            ]
+        }
+    }
+}
