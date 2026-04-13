@@ -926,7 +926,7 @@ async def steale(ctx, *, emoji_input: str = None):
             reason=f"Emoji uploaded by request of {ctx.author}"
         )
 
-        await ctx.send(f"✅ Added {new_emoji}")
+        await ctx.send(f"sniped hoe lol {new_emoji}")
 
     except discord.Forbidden:
         await ctx.send("❌ I don't have permission to upload emojis here.")
