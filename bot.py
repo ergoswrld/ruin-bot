@@ -7,7 +7,11 @@ import os
 import io
 from datetime import datetime, timezone, timedelta
 from PIL import Image, ImageDraw, ImageFont
+from dotenv import load_dotenv
+from flask import Flask
+from threading import Thread
 
+load_dotenv()
 TOKEN = os.getenv("TOKEN")
 PREFIX = ","
 DATA_FILE = "server_bot_data.json"
@@ -1726,5 +1730,21 @@ async def helpme(ctx):
         COLOUR_NORMAL,
     )
     await ctx.send(embed=embed)
+app = Flask('')
+
+@app.route('/')
+def home():
+    return "Bot is alive!"
+
+def run():
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
+
+def keep_alive():
+    t = Thread(target=run)
+    t.start()
+
+keep_alive()
+
 
 bot.run(TOKEN)
