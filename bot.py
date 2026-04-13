@@ -981,6 +981,73 @@ async def daily(ctx):
 
     await ctx.send(embed=embed)
 
+@bot.command()
+async def steale(ctx, *, emoji_input: str):
+    if not ctx.guild:
+        embed = make_embed(" Emoji Steal", "This command only works inside a server.", COLOUR_ERROR)
+        await ctx.send(embed=embed)
+        return
+
+    me = ctx.guild.me
+    if me is None:
+        embed = make_embed(" Emoji Steal", "I couldn't verify my permissions in this server.", COLOUR_ERROR)
+        await ctx.send(embed=embed)
+        return
+
+    if not me.guild_permissions.create_guild_expressions:
+        embed = make_embed(
+            " Emoji Steal",
+            "I need the **Create Guild Expressions** permission in this server.",
+            COLOUR_ERROR
+        )
+        await ctx.send(embed=embed)
+        return
+
+    emoji = discord.PartialEmoji.from_str(emoji_input)
+
+    if emoji.id is None:
+        embed = make_embed(
+            " Emoji Steal",
+            "Paste a real custom emoji like **<:name:id>** or **<a:name:id>**.",
+            COLOUR_ERROR
+        )
+        await ctx.send(embed=embed)
+        return
+
+    try:
+        image_bytes = await emoji.read()
+
+        new_emoji = await ctx.guild.create_custom_emoji(
+            name=emoji.name or "stolen_emoji",
+            image=image_bytes,
+            reason=f"Emoji uploaded by request of {ctx.author}"
+        )
+
+        embed = make_embed(
+            " Emoji Stolen",
+            f"Added **:{new_emoji.name}:** to **{ctx.guild.name}**.",
+            COLOUR_UTILITY
+        )
+        embed.add_field(name="Preview", value=str(new_emoji), inline=False)
+        set_user_thumb(embed, ctx.author)
+        await ctx.send(embed=embed)
+
+    except discord.Forbidden:
+        embed = make_embed(
+            " Emoji Steal",
+            "Discord blocked me from uploading that emoji. Check my server permissions.",
+            COLOUR_ERROR
+        )
+        await ctx.send(embed=embed)
+
+    except discord.HTTPException as e:
+        embed = make_embed(
+            " Emoji Steal",
+            f"Discord rejected that upload.\n```{e}```",
+            COLOUR_ERROR
+        )
+        await ctx.send(embed=embed)
+
 # -------------------------
 # COMMANDS: HUNT / PETS
 # -------------------------
