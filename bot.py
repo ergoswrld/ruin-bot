@@ -1071,6 +1071,10 @@ async def stats(ctx, member: discord.Member = None):
     await ctx.send(embed=embed)
 
 @bot.command()
+async def test(ctx):
+    await ctx.send("working")
+
+@bot.command()
 async def bal(ctx, member: discord.Member = None):
     data = load_data()
     target = member or ctx.author
