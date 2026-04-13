@@ -4,6 +4,7 @@ from discord.ext.commands import cooldown, BucketType
 import random
 import json
 import os
+import re
 import io
 from datetime import datetime, timezone, timedelta
 from PIL import Image, ImageDraw, ImageFont
